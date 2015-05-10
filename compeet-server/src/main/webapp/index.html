@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Samples for Compeet's REST functions</title>
+    </head>
+    <body>
+        <h1>Samples for Compeet's REST functions</h1>
+        <p><a href="rest/registration/test">test</a>
+        <p><a href="rest/registration/user-list">user-list</a>
+
+        <p>register</p>
+        <form id="formRegister">
+            <input id='register-fullname' name='fullName' value='fullName'>
+            <input id='register-nick' name='nick' value='nick'>
+            <input id='register-mail' name='mail' value='mail'>
+            <input id='register-password' name='password' value='password'>
+            <input type="button" value="submit" onclick="submitform()"/>
+            <div id="formRegisterOutput"></div>
+        </form>
+
+
+        <script type="text/javascript">
+            function submitform() {
+                document.getElementById("formRegisterOutput").innerHTML = "working";
+                var xmlhttp = new XMLHttpRequest();
+                var url = "rest/registration/register";
+
+                xmlhttp.onreadystatechange = function () {
+                    showResult(xmlhttp.responseText);
+                };
+                xmlhttp.open("POST", url, true);
+                xmlhttp.setRequestHeader("Content-type", "application/json");
+                var parameters = {
+                    "fullName": document.getElementById('register-fullname').value,
+                    "nick": document.getElementById('register-nick').value,
+                    "mail": document.getElementById('register-mail').value,
+                    "password": document.getElementById('register-password').value
+                };
+//                xmlhttp.send('{"fullName":   "Petr A", "nick":   "aubi", "mail":  "aubi@example.com", password="xxx"}');
+                xmlhttp.send(JSON.stringify(parameters));
+
+                function showResult(arr) {
+                    document.getElementById("formRegisterOutput").innerHTML = "result: " + arr;
+                }
+            }
+        </script>
+
+    </body>
+</html>
